@@ -93,14 +93,23 @@ class FSKMod {
         this.audioSource = this.audioContext.createBufferSource();
         this.audioSource.buffer = audioData;
         this.audioSource.connect(this.audioContext.destination);
+        var playme = document.getElementById("playme")
+        this.audioSource.onended = function(){
+            if (playme)
+                playme.disabled = false;
+        }
         try {
             console.log("state:" + this.audioContext.state);
+            if (playme)
+                playme.disabled = true;
             this.audioSource.start(0);
         } catch (error) {
             try {
                 this.audioSource.noteOn(0);
             }
             catch(error){
+                if (playme)
+                    playme.disabled = false;
             }
         }
         /*
