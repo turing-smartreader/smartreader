@@ -96,12 +96,12 @@ class FSKMod {
         var playme = document.getElementById("playme")
         this.audioSource.onended = function(){
             if (playme)
-                playme.disabled = false;
+                playme.hidden = false;
         }
         try {
             console.log("state:" + this.audioContext.state);
             if (playme)
-                playme.disabled = true;
+                playme.hidden = true;
             this.audioSource.start(0);
         } catch (error) {
             try {
@@ -109,7 +109,7 @@ class FSKMod {
             }
             catch(error){
                 if (playme)
-                    playme.disabled = false;
+                    playme.hidden = false;
             }
         }
         /*
