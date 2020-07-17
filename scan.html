@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>html5 qrcode</title>
-    <script type="text/javascript" src="js/html5-qrcode.min.js"></script>
+    <title>Instascan</title>
+    <script type="text/javascript" src="js/instascan.min.js"></script>
   </head>
   <body>
-    <div id="reader" width="640px"></video>
+    <video id="preview"></video>
     <script type="text/javascript">
-        function onScanSuccess(qrMessage) {
-	    // handle the scanned code as you like
-            alert('succ:' + qrMessage);
+      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+      scanner.addListener('scan', function (content) {
+        console.log(content);
+      });
+      Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+          scanner.start(cameras[0]);
+        } else {
+          console.error('No cameras found.');
         }
-
-        function onScanFailure(error) {
-	    // handle scan failure, usually better to ignore and keep scanning
-            //console.log('err:' + error);
-        }
-
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-	    "reader", { fps: 10, qrbox: 320 }, /* verbose= */ true);
-        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+      }).catch(function (e) {
+        console.error(e);
+      });
     </script>
   </body>
 </html>
