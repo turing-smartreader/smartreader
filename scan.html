@@ -9,12 +9,12 @@
     <script type="text/javascript">
         function onScanSuccess(qrMessage) {
 	    // handle the scanned code as you like
-            alert(qrMessage);
+            console.log('succ:' + qrMessage);
         }
 
         function onScanFailure(error) {
 	    // handle scan failure, usually better to ignore and keep scanning
-            alert(error);
+            console.log('err:' + error);
         }
 
         let html5QrcodeScanner = new Html5QrcodeScanner(
