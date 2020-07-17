@@ -105,6 +105,7 @@ class FSKMod {
     }
 
     play(audioData) {
+        var self = this;
         this.getAudioContext();
         this.audioSource = this.audioContext.createBufferSource();
         this.audioSource.buffer = audioData;
@@ -113,7 +114,7 @@ class FSKMod {
         this.audioSource.onended = function(){
             if (playme)
                 playme.hidden = false;
-            this.suspend();
+            self.suspend();
         }
         try {
             console.log("state:" + this.audioContext.state);
