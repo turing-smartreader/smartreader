@@ -88,6 +88,22 @@ class FSKMod {
         return await this.audioContext.decodeAudioData(arrayBuff);
     }
 
+    suspend() {
+        try {
+            this.audioContext.suspend();
+        }
+        catch (error) {
+        }
+    }
+
+    resume() {
+        try {
+            this.audioContext.resume();
+        }
+        catch (error) {
+        }
+    }
+
     play(audioData) {
         this.getAudioContext();
         this.audioSource = this.audioContext.createBufferSource();
@@ -97,11 +113,14 @@ class FSKMod {
         this.audioSource.onended = function(){
             if (playme)
                 playme.hidden = false;
+            this.suspend();
         }
         try {
             console.log("state:" + this.audioContext.state);
             if (playme)
                 playme.hidden = true;
+            if (this.audioContext.state !== 'running')
+                this.resume();
             this.audioSource.start(0);
         } catch (error) {
             try {
