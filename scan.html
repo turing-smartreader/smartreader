@@ -5,7 +5,7 @@
     <script type="text/javascript" src="js/html5-qrcode.min.js"></script>
   </head>
   <body>
-    <div id="reader" width="320px" height="320px"></video>
+    <div id="reader" width="640px"></video>
     <script type="text/javascript">
         function onScanSuccess(qrMessage) {
 	    // handle the scanned code as you like
@@ -14,7 +14,7 @@
 
         function onScanFailure(error) {
 	    // handle scan failure, usually better to ignore and keep scanning
-            console.log('err:' + error);
+            //console.log('err:' + error);
         }
 
         let html5QrcodeScanner = new Html5QrcodeScanner(
