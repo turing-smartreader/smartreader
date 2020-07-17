@@ -1,0 +1,42 @@
+<html>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">扫描二维码</h1>
+    <link href="css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/mui.min.js"></script>
+</header>
+<div class="mui-content mui-content-padded">
+    <button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="startCan">开始扫描</button>
+    <button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="startCanOne">识别本地</button>
+    <div id="scanContainer" style="width:300px; height:300px; border:1px solid red; margin:0px auto;"></div>
+    <div id="info"></div>
+</div>
+<script src='js/jquery.min.js'></script>
+<script type="text/javascript">
+mui.plusReady(function(){
+    $("#startCan").bind('tap',function(){
+        // 扫描二维码
+        var barScan = new plus.barcode.Barcode("scanContainer");
+        barScan.onmarked = function(type,code,file){
+            var result = "type"+type+"<br/>code:"+code+"<br/>file:"+file;
+            $("#info").html(result);
+        };
+        //barScan.start(); 开始扫描
+        barScan.start({conserve:true,filename:"_doc/barcode/"});// 可以配置扫描后保存的路径        
+    });
+    // 如何识别本地的二维码
+    $("#startCanOne").bind('tap',function(){
+        plus.gallery.pick(function(){
+            plus.barcode.scan(Path,function(type,code,file){
+                var result = "type"+type+"<br/>code:"+code+"<br/>file:"+file;
+                $("#info").html(result);
+            },function(error){
+                plus.nativeUI.alert('无法识别图片');
+            });
+        },function(err){
+            plus.nativeUI.alert('Failed:'+err.message);
+        });
+    });
+});
+</script>
+</html>
